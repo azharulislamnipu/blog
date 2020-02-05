@@ -1,0 +1,29 @@
+{
+    "name": "blog",
+    "version": "1.0.0",
+    "description": "blog app bulid with react and node js",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "server": "node server.js",
+        "client": "npm run devserver --prefix client",
+        "client-prod": "npm start --prefix client",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "prod": "concurrently \"npm run server\" \"npm run client-prod\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run prod --prefix client-prod"
+    },
+    "keywords": [
+        "blog",
+        "blo"
+    ],
+    "author": "Azharul Islam",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "concurrently": "^5.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "nodemon": "^1.19.4"
+    }
+}
