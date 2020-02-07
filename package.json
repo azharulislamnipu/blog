@@ -5,16 +5,17 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
+        "devserver": "nodemon server.js",
         "server": "node server.js",
         "client": "npm run devserver --prefix client",
         "client-prod": "npm start --prefix client",
-        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "dev": "concurrently \"npm run devserver\" \"npm run client\"",
         "prod": "concurrently \"npm run server\" \"npm run client-prod\"",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run prod --prefix client-prod"
     },
     "keywords": [
         "blog",
-        "blo"
+        "template"
     ],
     "author": "Azharul Islam",
     "license": "ISC",

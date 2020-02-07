@@ -13,6 +13,8 @@
     "author": "Azhar",
     "license": "ISC",
     "dependencies": {
+        "@material-ui/core": "^4.9.1",
+        "@material-ui/icons": "^4.9.1",
         "autoprefixer": "^9.6.5",
         "babel-core": "^6.26.3",
         "babel-loader": "^7.1.5",
