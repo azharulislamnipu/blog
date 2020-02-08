@@ -8,17 +8,12 @@ import {
   } from "react-router-dom";
 
 import PublicRoute from './ui/PublicRoute';
-//  import Home from './pages/Home'
 import About from './pages/subpage/About';
 import Notfound from './pages/subpage/404';
 import Preloader from './ui/preloader';
-//  const Home = React.lazy(() => import('./pages/Home'));
-
-const Home = React.lazy(() => {
-    return new Promise(resolve => setTimeout(resolve,5000)).then(
-      () => import("./pages/Home")
-    );
-  });
+import lazyload from './ui/lazyloader';
+const Home = lazyload(import("./pages/Home"));
+// const About = lazyload(import("./pages/subpage/About"));
 class App extends Component {
 
     
@@ -32,8 +27,8 @@ class App extends Component {
                 
                        
                    <PublicRoute path="/" exact component={Home}/>
-                   {/* <PublicRoute path="/about" exact component={About}/>
-                   <Route path="*" component={Notfound} /> */}
+                    <PublicRoute path="/about" exact component={About}/>
+                   <Route path="*" component={Notfound} /> 
             
                 </Switch>
                 </Suspense>
