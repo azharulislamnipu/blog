@@ -1508,9 +1508,9 @@ ul {
     font-family: $barlow;
     font-size: $base-font-size;
     background-clip: content-box;
-    &:focus{
-        background-color:transparent;
-        box-shadow:none;
+    &:focus {
+        background-color: transparent;
+        box-shadow: none;
         border-color: #171337;
     }
     &::-webkit-input-placeholder {
