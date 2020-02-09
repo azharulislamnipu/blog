@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,14 +18,17 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
 import Slide from "@material-ui/core/Slide";
-import deepOrange from '@material-ui/core/colors/deepOrange';
-
-const themeColor = deepOrange[600]; // #F44336
-
-
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import Link from '@material-ui/core/Link';
+import About from '../pages/subpage/About';
 function HideOnScroll(props) {
     const { children, window } = props;
     // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -49,6 +53,12 @@ function HideOnScroll(props) {
   };
 
 const useStyles = makeStyles(theme => ({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
   grow: {
     flexGrow: 1,
   },
@@ -56,6 +66,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   title: {
+    color:'#fff',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -109,11 +120,85 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
-
+function handleClicked (){
+  console.log("firstList Clicked")
+  
+}
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 export default function AppBarHeader(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (side, open) => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [side]: open });
+  };
+
+  const leftMenuLists = {
+    links:[
+     
+      {
+        id:'home',
+       name:'Home',
+       to:'/'
+      },
+      {
+        id:'about',
+       name:'About',
+       to:'about'
+      },
+      {
+        id:'blog',
+       name:'Blog',
+       to:'blog'
+      }
+    ]
+  }
+
+
+
+
+  const sideList = side => (
+    <div
+      className={classes.list}
+      role="presentation"
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
+    >
+      <List>
+        {leftMenuLists.links.map((link, index) => (
+          
+           <ListItemLink href={link.to} key={index}>
+             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+           <ListItemText primary={link.name}  />
+         </ListItemLink>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -194,7 +279,7 @@ export default function AppBarHeader(props) {
 
   return (
     <div className={classes.grow}>
-
+      <CssBaseline/>
      <HideOnScroll {...props}>
      <AppBar position="static">
         <Toolbar>
@@ -203,6 +288,7 @@ export default function AppBarHeader(props) {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={toggleDrawer('left', true)}
           >
             <MenuIcon />
           </IconButton>
@@ -262,22 +348,13 @@ export default function AppBarHeader(props) {
 
       </HideOnScroll>
 
+      <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
+        {sideList('left')}
+      </Drawer>
 
       {renderMobileMenu}
       {renderMenu}
 
-      <Container>
-        <Box my={2}>
-          {[...new Array(12)]
-            .map(
-              () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-            )
-            .join("\n")}
-        </Box>
-      </Container>
     </div>
   );
 }

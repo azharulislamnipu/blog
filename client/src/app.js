@@ -1,6 +1,6 @@
 import React, { Component, Fragment , Suspense} from 'react';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import './css/styles.scss';
+import './scss/styles.scss';
 import {
     BrowserRouter as Router,
     Switch,
@@ -24,10 +24,9 @@ class App extends Component {
                 <Router>
                 <Suspense fallback={<Preloader/>}>
                    <Switch>
-                
-                       
+
                    <PublicRoute path="/" exact component={Home}/>
-                    <PublicRoute path="/about" exact component={About}/>
+                   <PublicRoute path="/about" exact component={About}/>
                    <Route path="*" component={Notfound} /> 
             
                 </Switch>
